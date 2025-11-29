@@ -1,0 +1,103 @@
+### FutureOfWork AI API - Exemplos de Requisições
+### Para usar este arquivo, instale a extensão REST Client no VS Code
+
+@baseUrl = https://localhost:7000
+@apiKey = FutureOfWork-API-Key-2024
+
+### 1. Health Check (sem autenticação)
+GET {{baseUrl}}/health
+Accept: application/json
+
+###
+
+### 2. Informações da API (sem autenticação)
+GET {{baseUrl}}/
+Accept: application/json
+
+###
+
+### 3. Listar Modelos Disponíveis
+GET {{baseUrl}}/api/v1/ai/models
+Accept: application/json
+X-API-Key: {{apiKey}}
+
+###
+
+### 4. OCR de Currículo (PDF)
+# Nota: Para testar no VS Code REST Client, substitua o caminho do arquivo
+POST {{baseUrl}}/api/v1/ai/ocr-resume
+X-API-Key: {{apiKey}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="cv.pdf"
+Content-Type: application/pdf
+
+< ./caminho/para/seu/cv.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+### 5. OCR de Currículo (Imagem PNG)
+POST {{baseUrl}}/api/v1/ai/ocr-resume
+X-API-Key: {{apiKey}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="cv.png"
+Content-Type: image/png
+
+< ./caminho/para/seu/cv.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+### 6. Match Summary - Compatibilidade entre CV e Vaga
+POST {{baseUrl}}/api/v1/ai/match-summary
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "candidateId": "candidate-123",
+  "resumeText": "Desenvolvedor .NET com 5 anos de experiência em desenvolvimento de aplicações web e desktop. Conhecimento em C#, ASP.NET Core, SQL Server, Azure, Docker, e metodologias ágeis. Experiência em arquitetura de microsserviços e CI/CD.",
+  "jobDescription": "Buscamos desenvolvedor .NET senior com experiência em C#, ASP.NET Core, SQL Server, Azure e Docker. Conhecimento em arquitetura de microsserviços é desejável. Trabalho remoto com metodologias ágeis."
+}
+
+###
+
+### 7. Match Summary - Exemplo com alta compatibilidade
+POST {{baseUrl}}/api/v1/ai/match-summary
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "resumeText": "Desenvolvedor Full Stack .NET com 7 anos de experiência. C#, ASP.NET Core, React, SQL Server, Azure, Docker, Kubernetes, CI/CD, Git, Scrum.",
+  "jobDescription": "Vaga para desenvolvedor Full Stack .NET com experiência em C#, ASP.NET Core, React, SQL Server, Azure e Docker. Conhecimento em Kubernetes e CI/CD é um diferencial."
+}
+
+###
+
+### 8. Classify Portfolio - Detecção de objetos em imagem
+POST {{baseUrl}}/api/v1/ai/classify-portfolio
+X-API-Key: {{apiKey}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="portfolio.jpg"
+Content-Type: image/jpeg
+
+< ./caminho/para/seu/portfolio.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+### 9. Teste com API Key inválida (deve retornar 401)
+GET {{baseUrl}}/api/v1/ai/models
+X-API-Key: Invalid-Key
+
+###
+
+### 10. Teste sem API Key (deve retornar 401)
+GET {{baseUrl}}/api/v1/ai/models
+
+###
