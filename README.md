@@ -507,7 +507,7 @@ Este projeto é parte de um trabalho acadêmico.
 
 ## 👥 Autores
 
-Desenvolvido como parte do projeto FutureOfWork.
+Desenvolvido por Pietro Saccarrão Cougo.
 
 ## 📞 Suporte
 
